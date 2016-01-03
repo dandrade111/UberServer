@@ -104,13 +104,17 @@ public class Cidade {
     //metodos
     //adicionar um user numa posicao
     public void add(User u, int x, int y){
+        synchronized(this.cidade[x][y]){
         this.cidade[x][y].addUser(u);
+        }
     }
     
     public void remove(User u){
         for(int i=0; i<this.getX();i++){
             for(int j=0; j<this.getY();j++){
-                if(this.cidade[i][j].containsUser(u)) this.cidade[i][j].removeUser(u);     
+                synchronized(this.cidade[i][j]){
+                if(this.cidade[i][j].containsUser(u)) this.cidade[i][j].removeUser(u);   
+                }
             }
         }
     }
@@ -120,7 +124,9 @@ public class Cidade {
         int res = 0;
         for(int i=0; i<this.getX(); i++){
             for(int j=0; j<this.getY(); j++){
+                 synchronized(this.cidade[i][j]){
                res += this.cidade[i][j].size();
+                 }
             }
         }
         return res;
@@ -131,7 +137,9 @@ public class Cidade {
         int res = 0;
         for(int i=0; i<this.getX(); i++){
             for(int j=0; j<this.getY(); j++){
+                 synchronized(this.cidade[i][j]){
                res += this.cidade[i][j].sizeCondutor();
+                 }
             }
         }
         return res;
@@ -141,7 +149,9 @@ public class Cidade {
     public boolean isEmpty(){
         for(int i=0; i<this.getX(); i++){
             for(int j=0; j<this.getY(); j++){
+                 synchronized(this.cidade[i][j]){
                if(!this.cidade[i][j].isEmpty()) return false;
+                 }
             }
         }
         return true;
@@ -152,7 +162,9 @@ public class Cidade {
         User a= new User();
         for(int i=0; i<this.getX(); i++){
             for(int j=0; j<this.getY(); j++){
+                 synchronized(this.cidade[i][j]){
                a = this.cidade[i][j].consulta(nome);
+                 }
                if(!a.equals(new User())) 
                    changeUserLocation2(a,x,y);
                    return true;
@@ -163,31 +175,38 @@ public class Cidade {
     
     public void anunciarDisponibilidade(String nome, int x, int y,String marca,String matricula){
         User aux = new User();
+        synchronized(this.users_inscritos){
         aux = this.users_inscritos.consulta(nome);
+        }
         aux.setMarca(marca);
         aux.setMatricula(matricula);
         aux.setTipo(1);
-        if(aux.isLogado()) this.cidade[x][y].addUser(aux);        
+        if(aux.isLogado()) 
+            synchronized(this.cidade[x][y]){this.cidade[x][y].addUser(aux);  }      
     }
     
     public boolean addUserC3(String nome,String password, int tipo,String marca,String matricula){
          User aux = new User(nome,password, tipo, marca, matricula);
+         synchronized(this.users_inscritos){
          this.users_inscritos.addUser(aux);
-         return true;
+         
+         return true;}
     }
     
     public boolean addUserC(String nome, String password){
         User aux = new User(nome, password);
+         synchronized(this.users_inscritos){
         this.users_inscritos.addUser(aux);
-        return true;
+        return true;}
     }
     
     
     public void changeUserLocation2(User a, int x, int y){
         
         User aux = new User(a);
+        synchronized(this.cidade){
         this.remove(a);
-        this.cidade[x][y].addUser(aux);   
+        this.cidade[x][y].addUser(aux);  } 
     }
   
     
@@ -196,8 +215,9 @@ public class Cidade {
            
         for(int i=0; i<this.getX(); i++){
             for(int j=0; j<this.getY(); j++){
+                synchronized(this.cidade[i][j]){
                 if(this.cidade[i][j].containsUser(a))
-                    return new Point2D.Float(i,j);
+                    return new Point2D.Float(i,j); }
             }
         }
         return new Point2D.Float(-1,-1);
@@ -207,8 +227,9 @@ public class Cidade {
         User aux = new User();   
         for(int i=0; i<this.getX(); i++){
             for(int j=0; j<this.getY(); j++){
+                synchronized(this.cidade[i][j]){
                 aux = this.cidade[i][j].consulta(a);
-                    return new Point2D.Float(i,j);
+                    return new Point2D.Float(i,j);}
             }
         }
         return new Point2D.Float(-1,-1);
@@ -224,7 +245,7 @@ public class Cidade {
         return 5*distancia(condutor,cliente);
     }
     
-    public void removeViajante(String a){
+    public synchronized void removeViajante(String a){
         this.viajantes.removeViajantes(a);
     }
     
@@ -232,75 +253,87 @@ public class Cidade {
      public User finder2(String nome_cliente, int ox, int oy) throws CloneNotSupportedException{
         int aux = 1;
         User user = new User();
-               
+               synchronized(this.cidade[ox][oy]){
          if((ox <this.getX()) && (oy<this.getY())){
             user = this.cidade[(int)(ox)][(int)(oy)].findCondutor();
             if(!user.equals(new User())) 
                 this.viajantes.addViajantes(new Viajante(user), new Viajante(this.users_inscritos.consulta(nome_cliente)));
-                return user;
+                return user;}
         }
         
     while(aux<this.getX() || aux<this.getY()){
+            
         if((ox-aux <this.getX()) && (oy-aux<this.getY())){
+            synchronized(this.cidade[ox-aux][oy-aux]){
             user = this.cidade[(int)(ox)-aux][(int)(oy-aux)].findCondutor();
             if(!user.equals(new User())) 
                 this.viajantes.addViajantes(new Viajante(user), new Viajante(this.users_inscritos.consulta(nome_cliente)));
                 return user;
-        }
-        else if((ox-aux <this.getX()) && (oy<this.getY())){
+        } }
+       
+        if((ox-aux <this.getX()) && (oy<this.getY())){
+                 synchronized(this.cidade[ox-aux][oy]){
             user = this.cidade[((ox))-aux][(int)(oy)].findCondutor();
             if(!user.equals(new User())) {
                 this.viajantes.addViajantes(new Viajante(user), new Viajante(this.users_inscritos.consulta(nome_cliente)));
                 return user;}
-        }
-        else if((ox-aux <this.getX()) && (oy+aux<this.getY())){
+        }}
+        if((ox-aux <this.getX()) && (oy+aux<this.getY())){
+            synchronized(this.cidade[ox-aux][oy+aux]){
             user = this.cidade[(int)(ox)-aux][(int)(oy+aux)].findCondutor();
             if(!user.equals(new User())){ 
                 this.viajantes.addViajantes(new Viajante(user), new Viajante(this.users_inscritos.consulta(nome_cliente)));
                 return user;}
-        }
-        else if((ox <this.getX()) && (oy-aux<this.getY())){
+        }}
+        if((ox <this.getX()) && (oy-aux<this.getY())){
+            synchronized(this.cidade[ox][oy-aux]){
             user = this.cidade[(ox)][(int)(oy-aux)].findCondutor();
             if(!user.equals(new User())){
                 this.viajantes.addViajantes(new Viajante(user), new Viajante(this.users_inscritos.consulta(nome_cliente)));
                 return user;
             }
-        }
-        else if((ox <this.getX()) && (oy+aux<this.getY())){
+        }}
+        if((ox <this.getX()) && (oy+aux<this.getY())){
+            synchronized(this.cidade[ox][oy+aux]){
             user = this.cidade[(int)(ox)][(int)(oy+aux)].findCondutor();
             if(!user.equals(new User())){
                 this.viajantes.addViajantes(new Viajante(user), new Viajante(this.users_inscritos.consulta(nome_cliente)));
                 return user;
             }
-        }
-        else if((ox+aux <this.getX()) && (oy-aux<this.getY())){
+        }}
+        if((ox+aux <this.getX()) && (oy-aux<this.getY())){
+            synchronized(this.cidade[ox+aux][oy-aux]){
             user = this.cidade[(int)(ox)+aux][(int)(oy-aux)].findCondutor();
             if(!user.equals(new User())){
                 this.viajantes.addViajantes(new Viajante(user), new Viajante(this.users_inscritos.consulta(nome_cliente)));
                 return user;
             }
-        }
-        else if((ox+aux <this.getX()) && (oy-aux<this.getY())){
+        }}
+        if((ox+aux <this.getX()) && (oy-aux<this.getY())){
+            synchronized(this.cidade[ox+aux][oy-aux]){
             user = this.cidade[(int)(ox)+aux][(int)(oy-aux)].findCondutor();
             if(!user.equals(new User())){
                 this.viajantes.addViajantes(new Viajante(user), new Viajante(this.users_inscritos.consulta(nome_cliente)));
                 return user;
             }
-        }
-        else if((ox+aux <this.getX()) && (oy<this.getY())){
+        }}
+        if((ox+aux <this.getX()) && (oy<this.getY())){
+            synchronized(this.cidade[ox+aux][oy]){
+        
             user = this.cidade[(int)(ox)+aux][(int)(oy)].findCondutor();
             if(!user.equals(new User())){
                 this.viajantes.addViajantes(new Viajante(user), new Viajante(this.users_inscritos.consulta(nome_cliente)));
                 return user;
             }
-        }
-        else if((ox+aux <this.getX()) && (oy+aux<this.getY())){
+        }}
+        if((ox+aux <this.getX()) && (oy+aux<this.getY())){
+            synchronized(this.cidade[ox+aux][oy+aux]){
             user = this.cidade[(int)(ox)+aux][(int)(oy+aux)].findCondutor();
             if(!user.equals(new User())){
                 this.viajantes.addViajantes(new Viajante(user), new Viajante(this.users_inscritos.consulta(nome_cliente)));
                 return user;
             }
-        }
+        }}
         aux++;
     }   
         

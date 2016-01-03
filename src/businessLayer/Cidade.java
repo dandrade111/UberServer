@@ -224,7 +224,10 @@ public class Cidade {
         return 5*distancia(condutor,cliente);
     }
     
-    //funcao que retira condutor e cliente da matriz
+    public void removeViajante(String a){
+        this.viajantes.removeViajantes(a);
+    }
+    
     //encontrar um condutor mais proximo
      public User finder2(String nome_cliente, int ox, int oy) throws CloneNotSupportedException{
         int aux = 1;

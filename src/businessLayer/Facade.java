@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 public class Facade implements BusinessIO {
     private Cidade cidade;
     private PedidosPendentes pedidospendentes;
-    private Viajantes viajantes;
     private Users users_inscritos;
     
             
@@ -24,14 +23,12 @@ public class Facade implements BusinessIO {
     {
         this.cidade = new Cidade(0,0);
         this.pedidospendentes = new PedidosPendentes();
-        this.viajantes = new Viajantes();
         //this.users_inscritos = new Users();
     }
     
     public Facade(int x, int y){
         this.cidade = new Cidade(x,y);
         this.pedidospendentes = new PedidosPendentes();
-        this.viajantes = new Viajantes();
     }
     
  
@@ -76,11 +73,11 @@ public class Facade implements BusinessIO {
         this.cidade.anunciarDisponibilidade(nome,x,y,marca,matricula);
     }
     
-    public void removeViajantes(Viajante a,Viajante b){
-        this.viajantes.removeViajantes(a, b);
+    public void removeViajante(String a){
+        this.cidade.removeViajante(a);
     }
 
-    public void notifyFoundClient(String nome) {
+    public void notifyFoundClient(String nome){
         //WaitHandle
     }
     

@@ -91,7 +91,7 @@ public class Viajantes {
         Set<Viajante> viajante = this.viajantes.keySet();
         for(Viajante v: viajante){
             if(v.getNome() == a){
-                
+                this.viajantes.remove(v);
             }
         }
            

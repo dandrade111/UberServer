@@ -94,7 +94,7 @@ public class MessageHandler implements BusinessIO{
                 }
                 case "at_destination":{
                     if(cmd.args.size == 2){
-                       cmd.result = ((String)cmd.args.listArgs.get(0), (int)cmd.args.listArgs.get(1));
+                       //cmd.result = ((String)cmd.args.listArgs.get(0), (int)cmd.args.listArgs.get(1));
                        hasResponse = true;
                     }
                    return cmd;
@@ -150,10 +150,10 @@ public class MessageHandler implements BusinessIO{
      public void anunciarDisponibilidade(String nome, int x, int y,String marca, String matricula){
          facade.anunciarDisponibilidade(nome, x, y, marca, matricula);
      }
-     
-     @Override
-     public void removeViajantes(Viajante a,Viajante b){
-         facade.removeViajantes(a,b);
-     }
+    
+    @Override
+     public void removeViajante(String a){
+        facade.removeViajante(a);
+    }
     
 }

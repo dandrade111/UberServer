@@ -22,10 +22,10 @@ public Point2D position2(String a);
 public float tempo(Point2D condutor, Point2D cliente);
 public void anunciarDisponibilidade(String nome, int x, int y,String marca, String matricula);
     
-public void removeViajantes(Viajante a,Viajante b);
+
 public boolean addUserC(String nome,String password);
 public boolean addUserC3(String nome,String password, int tipo,String marca,String matricula);
-//public void removeUser(User a);
+public void removeViajante(String a);
 public boolean login(String nome, String pass);
     
 }

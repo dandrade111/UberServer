@@ -73,6 +73,7 @@ public class MessageHandler implements BusinessIO{
                        cmd.result = a.getMarca() + "" + a.getMatricula()+ ""+tempo(position2(a.getNome()), position2((String)cmd.args.listArgs.get(0))) + "\n";
                        hasResponse = true;
                        facade.notifyFoundClient(a.getNome());
+                       
                     }
                    return cmd;
                 }

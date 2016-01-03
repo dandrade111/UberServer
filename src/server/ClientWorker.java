@@ -22,7 +22,7 @@ public class ClientWorker implements Runnable {
     private Facade facade;
     private ObjectInputStream in;
     private ObjectOutputStream out;
-
+    private MessageHandler messageHandler;
     //Constructor
     ClientWorker(Socket client, Facade facade) 
     {
@@ -32,7 +32,6 @@ public class ClientWorker implements Runnable {
     
     public void run()
     {
-        MessageHandler messageHandler;
         Command cmd = null;
         //Object res = null;
         
@@ -68,11 +67,30 @@ public class ClientWorker implements Runnable {
         finalize();
     }
     
-    public void sendNotification(ArrayList<String> notifications){
+    public void sendNotification(String noteType){
         try{
-            Command temp = new Command("Alerta","",new Object[]{notifications});
-            out.writeObject(temp);
-            out.flush();
+            switch (noteType){
+                case "":break;
+                case "note1":{
+                    Command temp = new Command("Alerta","",new Object[]{""});
+                    out.writeObject(temp);
+                    out.flush();
+                    break;
+                }
+                case "note2":{
+                    Command temp = new Command("Alerta","",new Object[]{""});
+                    out.writeObject(temp);
+                    out.flush();
+                    break;
+                }
+                case "note3":{
+                    Command temp = new Command("Alerta","",new Object[]{""});
+                    out.writeObject(temp);
+                    out.flush();
+                    break;
+                }
+            }
+            
         }catch(Exception e){
             System.out.println("Falha na Leitura do alerta: " + e.getMessage());
         }
@@ -88,5 +106,9 @@ public class ClientWorker implements Runnable {
             System.out.println("Erro ao Fechar o Socket!");
             System.exit(-1);
         }
+    }
+    
+    public String getUserName(){
+       return messageHandler.getClientName();
     }
 }

@@ -19,6 +19,7 @@ public class MessageHandler implements BusinessIO{
     private Facade facade;
     private Command cmd;
     public boolean hasResponse;
+    public String name = "";
     
     public MessageHandler(Facade f){
         this.facade = f;
@@ -55,6 +56,8 @@ public class MessageHandler implements BusinessIO{
                 case "login_cliente":{
                     if(cmd.args.size == 2){
                         cmd.result = login((String)cmd.args.listArgs.get(0),(String)cmd.args.listArgs.get(1));  
+                        if((boolean)cmd.result)
+                            this.name = (String)cmd.args.listArgs.get(0);
                         hasResponse = true;
                    }
                   return cmd;
@@ -72,7 +75,8 @@ public class MessageHandler implements BusinessIO{
                       new User(finder2((String)cmd.args.listArgs.get(0), (int) cmd.args.listArgs.get(1), (int) cmd.args.listArgs.get(2)));             
                        cmd.result = a.getMarca() + "" + a.getMatricula()+ ""+tempo(position2(a.getNome()), position2((String)cmd.args.listArgs.get(0))) + "\n";
                        hasResponse = true;
-                       facade.notifyFoundClient(a.getNome());
+                       facade.addnotify1(a.getNome());
+                       
                     }
                    return cmd;
                 }
@@ -108,7 +112,9 @@ public class MessageHandler implements BusinessIO{
         return null;
     }
     
-    
+    public String getClientName(){
+         return this.name;
+    }
     
     @Override
     public boolean login(String nome, String pass){
@@ -155,5 +161,6 @@ public class MessageHandler implements BusinessIO{
      public void removeViajante(String a){
         facade.removeViajante(a);
     }
+     
     
 }

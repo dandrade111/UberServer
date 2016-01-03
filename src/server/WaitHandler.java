@@ -21,11 +21,6 @@ public class WaitHandler implements Runnable {
     
     public WaitHandler(Facade f){
         this.facade = f;
-        this.clientes = new ArrayList<ClientWorker>();
-    }
-    
-    public void addClient(ClientWorker client){
-        clientes.add(client);
     }
     
     @Override
@@ -35,11 +30,33 @@ public class WaitHandler implements Runnable {
         while(true){
             try {
                 Thread.sleep(2000);
-                //cenas...
+                for(ClientWorker cw : clientes)
+                {
+                    String name = cw.getUserName();
+                    if(name != ""){
+                        if(facade.getNotify1().contains(name))
+                            cw.sendNotification("note1");
+                        
+                        if(facade.getNotify1().contains(name))
+                            cw.sendNotification("note2");
+                                    
+                        if(facade.getNotify1().contains(name))
+                            cw.sendNotification("note3");
+                    }
+                    facade.clearNotes1();
+                    facade.clearNotes2();
+                    facade.clearNotes3();
+                        
+                }
+                
             } catch (InterruptedException ex) {
                 
             }
         }
+    }
+
+    void addClient(ClientWorker w) {
+        clientes.add(w);
     }
     
 }

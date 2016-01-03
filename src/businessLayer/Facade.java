@@ -6,6 +6,7 @@
 package businessLayer;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +18,9 @@ public class Facade implements BusinessIO {
     private Cidade cidade;
     private PedidosPendentes pedidospendentes;
     private Users users_inscritos;
-    
+    private ArrayList<String> clients1 = new ArrayList<String>();
+    private ArrayList<String> clients2 = new ArrayList<String>();
+    private ArrayList<String> clients3 = new ArrayList<String>();
             
     public Facade()
     {
@@ -77,9 +80,35 @@ public class Facade implements BusinessIO {
         this.cidade.removeViajante(a);
     }
 
-    public void notifyFoundClient(String nome){
-        //WaitHandle
+    public void addnotify1(String nome){
+        this.clients1.add(nome);
+    }
+    public void addnotify2(String nome){
+        this.clients2.add(nome);
+    }
+    public void addnotify3(String nome){
+        this.clients3.add(nome);
     }
     
+    public ArrayList<String> getNotify1(){
+        return this.clients1;
+    }
+    public ArrayList<String> getNotify2(){
+        return this.clients2;
+    }
+    public ArrayList<String> getNotify3(){
+        return this.clients3;
+    }
     
+    public void clearNotes1(){
+        this.clients1.clear();
+    }
+    
+    public void clearNotes2(){
+        this.clients2.clear();
+    }
+    
+    public void clearNotes3(){
+        this.clients3.clear();
+    }
 }

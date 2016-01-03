@@ -27,5 +27,5 @@ public boolean addUserC(String nome,String password);
 public boolean addUserC3(String nome,String password, int tipo,String marca,String matricula);
 public void removeViajante(String a);
 public boolean login(String nome, String pass);
-    
+
 }

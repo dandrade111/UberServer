@@ -45,19 +45,26 @@ public class Server {
             System.exit(1);
         }
         
+        WaitHandler notify;
+        notify = new WaitHandler(business);
+        Thread t1 = new Thread(notify);
+        t1.start();
+            
         while(true){
-            handler();
+            handler(notify);
         }
     }
-    public static void handler(){
+    public static void handler(WaitHandler notify){
         
         ClientWorker w;
         try
         {
+           
             w = new ClientWorker(server.accept(),business);
-            //WaitHandler.addClient(w);
+            notify.addClient(w);
             Thread t = new Thread(w);
             t.start();
+            
         }
         catch(IOException ioEx)
         {

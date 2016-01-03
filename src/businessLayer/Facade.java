@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 public class Facade implements BusinessIO {
     private Cidade cidade;
     private PedidosPendentes pedidospendentes;
-    private Users users_inscritos;
     private ArrayList<String> clients1 = new ArrayList<String>();
     private ArrayList<String> clients2 = new ArrayList<String>();
     private ArrayList<String> clients3 = new ArrayList<String>();
@@ -46,8 +45,8 @@ public class Facade implements BusinessIO {
 }
     
   
-    public boolean login(String nome, String pass){
-        return users_inscritos.login(nome,pass);
+    public boolean loginC(String nome, String pass){
+        return cidade.loginC(nome,pass);
      }
     
     public boolean changeUserLocation(String nome, int x, int y){

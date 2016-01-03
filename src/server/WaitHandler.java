@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class WaitHandler implements Runnable {
 
     private Facade facade;
-    private ArrayList<ClientWorker> clientes;
+    private ArrayList<ClientWorker> clientes = new ArrayList<>();
     
     public WaitHandler(Facade f){
         this.facade = f;

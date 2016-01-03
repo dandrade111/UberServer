@@ -157,6 +157,11 @@ public class Cidade {
         return true;
     }
     
+    //login
+    public boolean loginC(String nome, String pass){
+        return this.users_inscritos.login(nome, pass);
+    }
+    
     //mudar localizacao de um user
     public boolean changeUserLocation(String nome, int x, int y){
         User a= new User();

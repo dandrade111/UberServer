@@ -128,11 +128,11 @@ public class Users {
         for(User u : this.users){
             if(u.getNome() == nome){
                 if(u.getPassword() == pass){
-                    if(!u.isLogado()){
+                    
                         u.setLogado(true);
                         return true;
                         
-                    }
+                    
                     
                 }
             }

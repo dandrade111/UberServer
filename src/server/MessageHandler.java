@@ -48,15 +48,15 @@ public class MessageHandler implements BusinessIO{
                     }
                     else if(cmd.args.size == 2){
                          cmd.result = addUserC((String)cmd.args.listArgs.get(0),(String)cmd.args.listArgs.get(1));
-                                               
                          hasResponse = true;
                     }
                   return cmd;
                 }
                 case "login_cliente":{
                     if(cmd.args.size == 2){
-                        cmd.result = login((String)cmd.args.listArgs.get(0),(String)cmd.args.listArgs.get(1));  
+                        cmd.result = loginC((String)cmd.args.listArgs.get(0),(String)cmd.args.listArgs.get(1));  
                         if((boolean)cmd.result)
+                            System.out.println("2");
                             this.name = (String)cmd.args.listArgs.get(0);
                         hasResponse = true;
                    }
@@ -117,8 +117,8 @@ public class MessageHandler implements BusinessIO{
     }
     
     @Override
-    public boolean login(String nome, String pass){
-        return facade.login(nome,pass);
+    public boolean loginC(String nome, String pass){
+        return facade.loginC(nome,pass);
      }
     
     @Override

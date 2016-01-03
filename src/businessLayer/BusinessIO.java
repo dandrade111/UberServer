@@ -26,6 +26,6 @@ public void anunciarDisponibilidade(String nome, int x, int y,String marca, Stri
 public boolean addUserC(String nome,String password);
 public boolean addUserC3(String nome,String password, int tipo,String marca,String matricula);
 public void removeViajante(String a);
-public boolean login(String nome, String pass);
+public boolean loginC(String nome, String pass);
 
 }

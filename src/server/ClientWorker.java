@@ -67,29 +67,12 @@ public class ClientWorker implements Runnable {
         finalize();
     }
     
-    public void sendNotification(String noteType){
+    public void sendNotification(Command command){
         try{
-            switch (noteType){
-                case "":break;
-                case "note1":{
-                    Command temp = new Command("Alerta","",new Object[]{""});
-                    out.writeObject(temp);
-                    out.flush();
-                    break;
-                }
-                case "note2":{
-                    Command temp = new Command("Alerta","",new Object[]{""});
-                    out.writeObject(temp);
-                    out.flush();
-                    break;
-                }
-                case "note3":{
-                    Command temp = new Command("Alerta","",new Object[]{""});
-                    out.writeObject(temp);
-                    out.flush();
-                    break;
-                }
-            }
+            System.out.println("Servidor -> Cliente:" + command.type);
+            command.result = true;
+            out.writeObject(command);
+            out.flush();
             
         }catch(Exception e){
             System.out.println("Falha na Leitura do alerta: " + e.getMessage());

@@ -157,6 +157,10 @@ public class Cidade {
         return true;
     }
     
+    public String devolvePassageiroAux(String a){
+        return this.viajantes.devolvePassageiroAux(a);
+    }
+    
     //login
     public boolean loginC(String nome, String pass){
         return this.users_inscritos.login(nome, pass);

@@ -56,7 +56,6 @@ public class MessageHandler implements BusinessIO{
                     if(cmd.args.size == 2){
                         cmd.result = loginC((String)cmd.args.listArgs.get(0),(String)cmd.args.listArgs.get(1));  
                         if((boolean)cmd.result){
-                            System.out.println("2");
                             this.name = (String)cmd.args.listArgs.get(0);
                         }
                         hasResponse = true;
@@ -70,14 +69,19 @@ public class MessageHandler implements BusinessIO{
                     }
                   return cmd;
                 }
+                
                 case "get_viagem":{ //falta ligar ao condutor (acordar thread)
                     if(cmd.args.size == 5){
-                       User a= new User(finder2((String)cmd.args.listArgs.get(0), 
+                        User a= new User(finder2((String)cmd.args.listArgs.get(0), 
                                Integer.valueOf((String) cmd.args.listArgs.get(1)), 
-                               Integer.valueOf((String) cmd.args.listArgs.get(2))));             
-                       cmd.result = a.getMarca() + "" + a.getMatricula()+ ""+tempo(position2(a.getNome()), position2((String)cmd.args.listArgs.get(0))) + "\n";
-                       hasResponse = true;
-                       facade.addnotify1(a.getNome());
+                               Integer.valueOf((String) cmd.args.listArgs.get(2))));
+                        Command tmp = cmd;
+                        cmd = new Command("get_viagem", "", new Object[]{a.getMatricula(),a.getMarca(),tempo(position2(a.getNome()),position2((String) cmd.args.listArgs.get(0)))});
+                        
+                        cmd.result = true;
+                               
+                        hasResponse = true;
+                        facade.addnotify1(a.getNome(), new Command("viagem_atribuida", "", new Object[]{(String) tmp.args.listArgs.get(1),(String) tmp.args.listArgs.get(2),(String) tmp.args.listArgs.get(3),(String) tmp.args.listArgs.get(4)}));
                        
                     }
                    return cmd;
@@ -95,16 +99,22 @@ public class MessageHandler implements BusinessIO{
                    return cmd;
                 }
                 case "at_pickup":{
-                    if(cmd.args.size == 0){
-                        cmd.result = "Chegou";
-                        hasResponse = true;
+                    if(cmd.args.size == 1){
+                        //cmd.result = "Chegou";
+                        hasResponse = false;
+                        String condutor = (String)cmd.args.listArgs.get(0);
+                        String passageiro = devolvePassageiroAux(condutor);
+                        facade.addnotify2(passageiro,new Command("veiculo_chegou", condutor , new Object[]{}));
                     }
                    return cmd;
                 }
                 case "at_destination":{
                     if(cmd.args.size == 2){
                        //cmd.result = ((String)cmd.args.listArgs.get(0), (int)cmd.args.listArgs.get(1));
-                       hasResponse = true;
+                       hasResponse = false;
+                       String condutor = (String)cmd.args.listArgs.get(0);
+                       String passageiro = devolvePassageiroAux(condutor);
+                       facade.addnotify3(passageiro,new Command("chegou_destino", condutor , new Object[]{(String)cmd.args.listArgs.get(1)}));
                     }
                    return cmd;
                 }
@@ -163,9 +173,13 @@ public class MessageHandler implements BusinessIO{
      }
     
     @Override
-     public void removeViajante(String a){
+    public void removeViajante(String a){
         facade.removeViajante(a);
     }
      
+    @Override
+    public String devolvePassageiroAux(String a){
+        return facade.devolvePassageiroAux(a);
+    }
     
 }

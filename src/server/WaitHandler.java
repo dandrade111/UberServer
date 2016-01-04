@@ -33,19 +33,23 @@ public class WaitHandler implements Runnable {
                 for(ClientWorker cw : clientes)
                 {
                     String name = cw.getUserName();
-                    if(name != ""){
-                        if(facade.getNotify1().contains(name))
-                            cw.sendNotification("note1");
+                    if(!"".equals(name)){
+                        if(facade.getNotify1().containsKey(name)){
+                            cw.sendNotification(facade.getNotify1().get(name));
+                            facade.clearNotes1(name);
+                        }
+                            
+                        if(facade.getNotify2().containsKey(name)){
+                            cw.sendNotification(facade.getNotify2().get(name));
+                            facade.clearNotes2(name);
+                        }
+                            
+                        if(facade.getNotify3().containsKey(name)){
+                            cw.sendNotification(facade.getNotify3().get(name));
+                            facade.clearNotes3(name);
+                        }
                         
-                        if(facade.getNotify1().contains(name))
-                            cw.sendNotification("note2");
-                                    
-                        if(facade.getNotify1().contains(name))
-                            cw.sendNotification("note3");
                     }
-                    facade.clearNotes1();
-                    facade.clearNotes2();
-                    facade.clearNotes3();
                         
                 }
                 

@@ -5,8 +5,10 @@
  */
 package businessLayer;
 
+import commands.Command;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,9 +19,9 @@ import java.util.logging.Logger;
 public class Facade implements BusinessIO {
     private Cidade cidade;
     private PedidosPendentes pedidospendentes;
-    private ArrayList<String> clients1 = new ArrayList<String>();
-    private ArrayList<String> clients2 = new ArrayList<String>();
-    private ArrayList<String> clients3 = new ArrayList<String>();
+    private HashMap<String,Command> clients1 = new HashMap<String,Command>();
+    private HashMap<String,Command> clients2 = new HashMap<String,Command>();
+    private HashMap<String,Command> clients3 = new HashMap<String,Command>();
             
     public Facade()
     {
@@ -79,35 +81,39 @@ public class Facade implements BusinessIO {
         this.cidade.removeViajante(a);
     }
 
-    public void addnotify1(String nome){
-        this.clients1.add(nome);
+    public void addnotify1(String nome, Command cmd){
+        this.clients1.put(nome, cmd);
     }
-    public void addnotify2(String nome){
-        this.clients2.add(nome);
+    public void addnotify2(String nome, Command cmd){
+        this.clients2.put(nome, cmd);
     }
-    public void addnotify3(String nome){
-        this.clients3.add(nome);
+    public void addnotify3(String nome, Command cmd){
+        this.clients3.put(nome, cmd);
     }
     
-    public ArrayList<String> getNotify1(){
+    public HashMap<String,Command> getNotify1(){
         return this.clients1;
     }
-    public ArrayList<String> getNotify2(){
+    public HashMap<String,Command> getNotify2(){
         return this.clients2;
     }
-    public ArrayList<String> getNotify3(){
+    public HashMap<String,Command> getNotify3(){
         return this.clients3;
     }
     
-    public void clearNotes1(){
-        this.clients1.clear();
+    public void clearNotes1(String key){
+        this.clients1.remove(key);
     }
     
-    public void clearNotes2(){
-        this.clients2.clear();
+    public void clearNotes2(String key){
+        this.clients2.remove(key);
     }
     
-    public void clearNotes3(){
-        this.clients3.clear();
+    public void clearNotes3(String key){
+        this.clients3.remove(key);
+    }
+    
+    public String devolvePassageiroAux(String a){
+        return this.cidade.devolvePassageiroAux(a);
     }
 }

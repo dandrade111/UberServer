@@ -96,5 +96,19 @@ public class Viajantes {
         }
            
     }
+    public String devolvePassageiroAux(String a){
+        Viajante aux = new Viajante();
+         Set<Viajante> viajante = this.viajantes.keySet();
+        for(Viajante v: viajante){
+            if(v.getNome().equals(a)){
+               return this.viajantes.get(v).getNome();
+               
+            }
+        }
+       
+        
+        return "";
+        
+    }
     
 }

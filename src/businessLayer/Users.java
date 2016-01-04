@@ -116,7 +116,7 @@ public class Users {
      public User findCondutor() throws CloneNotSupportedException{
          User user = new User();
          for (User obj : this.users) {
-         if (obj.getTipo()==2) 
+         if (obj.getTipo()==1) 
           user = obj;
           this.users.remove(obj);
           return user;

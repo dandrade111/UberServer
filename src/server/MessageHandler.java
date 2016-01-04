@@ -55,9 +55,10 @@ public class MessageHandler implements BusinessIO{
                 case "login_cliente":{
                     if(cmd.args.size == 2){
                         cmd.result = loginC((String)cmd.args.listArgs.get(0),(String)cmd.args.listArgs.get(1));  
-                        if((boolean)cmd.result)
+                        if((boolean)cmd.result){
                             System.out.println("2");
                             this.name = (String)cmd.args.listArgs.get(0);
+                        }
                         hasResponse = true;
                    }
                   return cmd;

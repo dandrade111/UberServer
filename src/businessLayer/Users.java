@@ -126,8 +126,8 @@ public class Users {
      
      public boolean login(String nome, String pass){
         for(User u : this.users){
-            if(u.getNome() == nome){
-                if(u.getPassword() == pass){
+            if(u.getNome().equals(nome)){
+                if(u.getPassword().equals(pass)){
                     
                         u.setLogado(true);
                         return true;

@@ -60,7 +60,7 @@ public class User {
     
     //sets e gets
     public String getNome(){
-         return nome;
+         return this.nome;
    }
 
 

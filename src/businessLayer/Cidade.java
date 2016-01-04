@@ -15,7 +15,7 @@ import java.util.Objects;
  * @author nmore_000
  */
 public class Cidade {
-    private Users[][] cidade;
+    private Users[][] cidade = new Users[100][100];
     private int x; //comprimento
     private int y; //largura
     private Users users_inscritos;

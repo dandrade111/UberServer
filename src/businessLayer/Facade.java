@@ -23,7 +23,7 @@ public class Facade implements BusinessIO {
             
     public Facade()
     {
-        this.cidade = new Cidade(0,0);
+        this.cidade = new Cidade(5,5);
         this.pedidospendentes = new PedidosPendentes();
         //this.users_inscritos = new Users();
     }

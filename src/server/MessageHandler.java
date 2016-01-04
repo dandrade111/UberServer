@@ -72,8 +72,9 @@ public class MessageHandler implements BusinessIO{
                 }
                 case "get_viagem":{ //falta ligar ao condutor (acordar thread)
                     if(cmd.args.size == 5){
-                       User a=
-                      new User(finder2((String)cmd.args.listArgs.get(0), (int) cmd.args.listArgs.get(1), (int) cmd.args.listArgs.get(2)));             
+                       User a= new User(finder2((String)cmd.args.listArgs.get(0), 
+                               Integer.valueOf((String) cmd.args.listArgs.get(1)), 
+                               Integer.valueOf((String) cmd.args.listArgs.get(2))));             
                        cmd.result = a.getMarca() + "" + a.getMatricula()+ ""+tempo(position2(a.getNome()), position2((String)cmd.args.listArgs.get(0))) + "\n";
                        hasResponse = true;
                        facade.addnotify1(a.getNome());
@@ -83,16 +84,19 @@ public class MessageHandler implements BusinessIO{
                 }
                 case "is_available":{
                     if(cmd.args.size == 5){
-                       anunciarDisponibilidade((String)cmd.args.listArgs.get(0), (int)cmd.args.listArgs.get(1)
-                               ,(int)cmd.args.listArgs.get(2),
-                       (String)cmd.args.listArgs.get(3),(String)cmd.args.listArgs.get(4));
+                       anunciarDisponibilidade(
+                               (String)cmd.args.listArgs.get(0), 
+                               Integer.valueOf((String)cmd.args.listArgs.get(1)),
+                               Integer.valueOf((String)cmd.args.listArgs.get(2)),
+                               (String)cmd.args.listArgs.get(3),
+                               (String)cmd.args.listArgs.get(4));
                         hasResponse = false;
                     }
                    return cmd;
                 }
                 case "at_pickup":{
                     if(cmd.args.size == 0){
-                       // cmd.result = 
+                        cmd.result = "Chegou";
                         hasResponse = true;
                     }
                    return cmd;

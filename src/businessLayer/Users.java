@@ -41,7 +41,7 @@ public class Users {
           
     public void addUser(User a){
         if(!(this.users.contains(a)))
-        this.users.add(a);
+            this.users.add(a);
     }
     
     //remove
@@ -57,7 +57,7 @@ public class Users {
     public User consulta(String nome){
         User aux = new User();
         for(User a: this.users){
-            if(a.getNome() == nome){
+            if(a.getNome().equals(nome)){
                 aux = new User(a) ;
             }
         }

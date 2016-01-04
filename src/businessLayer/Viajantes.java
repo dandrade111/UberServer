@@ -90,7 +90,7 @@ public class Viajantes {
     public void removeViajantes(String a){
         Set<Viajante> viajante = this.viajantes.keySet();
         for(Viajante v: viajante){
-            if(v.getNome() == a){
+            if(v.getNome().equals(a)){
                 this.viajantes.remove(v);
             }
         }
